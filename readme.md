@@ -11,7 +11,7 @@ This bot automates ping nodes bless
 ## Requirements
 
 - Python [Download](https://www.python.org/ftp/python/3.13.0/python-3.13.0-amd64.exe).
-- Bless Account [Register Here](https://bless.network/dashboard?ref=P3Z3OA).
+- Bless Account [Register Here](https://bless.network/dashboard?ref=5TDE5J).
 
 ## Installation
 
