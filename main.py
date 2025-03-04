@@ -51,7 +51,7 @@ async def main():
       ██║  ██║██████╔╝██████╔╝    ██║ ╚████║╚██████╔╝██████╔╝███████╗
       ╚═╝  ╚═╝╚═════╝ ╚═════╝     ╚═╝  ╚═══╝ ╚═════╝ ╚═════╝ ╚══════╝  
         By : ADB NODE
-
+    """)
     accounts = load_accounts()
     if not accounts:
         return
