@@ -18,7 +18,7 @@ This bot automates ping nodes bless
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/ahlulmukh/bless-autorun.git
+   git clone https://github.com/airdropbomb/blesspy.git
    cd bless-autorun
    ```
 
