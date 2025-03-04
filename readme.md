@@ -19,7 +19,7 @@ This bot automates ping nodes bless
 
    ```sh
    git clone https://github.com/airdropbomb/blesspy.git
-   cd bless-autorun
+   cd blesspy
    ```
 
 2. Install the packages:
