@@ -1,6 +1,7 @@
 import asyncio
 import json
 import os
+from datetime import datetime
 
 from src.main.bless import BlessAutoRun
 from src.main.proxy import ProxyManager
@@ -11,35 +12,12 @@ def load_accounts(filename="accounts.json"):
     if not os.path.exists(filename):
         Logger.log_message(0, 0, "accounts.json not found", "error")
         return []
-
     try:
         with open(filename, "r") as f:
             return json.load(f)
     except json.JSONDecodeError:
         Logger.log_message(0, 0, "Error accounts.json", "error")
         return []
-
-
-proxy_manager = ProxyManager()
-
-
-async def run_ping(account_data, index, total_accounts):
-    token = account_data["Token"]
-    nodes = account_data["Nodes"]
-
-    proxy = proxy_manager.get_random_proxy(
-        index + 1, total_accounts)
-
-    tasks = []
-    for node in nodes:
-        node_obj = type("Node", (object,), node)
-        bless = BlessAutoRun(
-            proxy=proxy, current_num=index + 1, total=total_accounts)
-
-        tasks.append(asyncio.create_task(bless.ping_node(node_obj, token)))
-
-    await asyncio.gather(*tasks)
-
 
 async def main():
     os.system("cls" if os.name == "nt" else "clear")
@@ -52,15 +30,49 @@ async def main():
       ╚═╝  ╚═╝╚═════╝ ╚═════╝     ╚═╝  ╚═══╝ ╚═════╝ ╚═════╝ ╚══════╝  
         By : ADB NODE
     """)
+
+    proxy_manager = ProxyManager()
     accounts = load_accounts()
     if not accounts:
         return
 
-    tasks = []
-    for i, account in enumerate(accounts):
-        tasks.append(asyncio.create_task(run_ping(account, i, len(accounts))))
+    try:
+        while True:
 
-    await asyncio.gather(*tasks)
+            results = []
+            for i, account in enumerate(accounts):
+                try:
+                    print("─" * 70)
+                    proxy = proxy_manager.get_random_proxy(
+                        i + 1, len(accounts))
+                    bot = BlessAutoRun(
+                        proxy=proxy, current_num=i + 1, total=len(accounts))
+                    result = await bot.run_ping(account)
+                    results.append(result)
+                except Exception as e:
+                    Logger.log_message(
+                        i + 1, len(accounts), f"Failed to process account: {str(e)}", "error")
+                    results.append({
+                        "totalReward": 0,
+                        "todayReward": 0,
+                        "nodes": []
+                    })
+            print('\n')
+            Logger.log_message(0, 0, "Accounts List", "success")
+            print("═" * 70)
+            for result in results:
+                Logger.log_message(
+                    0, 0, f"Total Reward: {result['totalReward']}", "success")
+                Logger.log_message(
+                    0, 0, f"Today Reward: {result['todayReward']}", "success")
+                print("─" * 70)
+
+            await bot.countdown(600)
+
+    except KeyboardInterrupt:
+        Logger.log_message(0, 0, "Process interrupted by user", "warning")
+    except Exception as e:
+        Logger.log_message(0, 0, f"Fatal error: {str(e)}", "error")
 
 
 if __name__ == "__main__":
