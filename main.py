@@ -67,7 +67,7 @@ async def main():
                     0, 0, f"Today Reward: {result['todayReward']}", "success")
                 print("─" * 70)
 
-            await bot.countdown(60)
+            await bot.countdown(600)
 
     except KeyboardInterrupt:
         Logger.log_message(0, 0, "Process interrupted by user", "warning")
