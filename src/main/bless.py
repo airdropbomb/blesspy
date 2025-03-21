@@ -76,7 +76,7 @@ class BlessAutoRun:
         Logger.log_message(self.current_num, self.total,
                            f"Trying to ping node", "process")
         try:
-            url = f"https://gateway-run.bls.dev/api/v1/nodes/{nodes.PubKey}/ping"
+            url = f"https://gateway-run.bls.dev/api/v1/nodes/{nodes.PubKey}"
             payload = {}
             headers = {
                 "Authorization": f"Bearer {auth_token}",
