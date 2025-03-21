@@ -54,7 +54,7 @@ class BlessAutoRun:
         Logger.log_message(self.current_num, self.total,
                            "Trying to get data account", "process")
         try:
-            url = "https://https://gateway-run.bls.dev/api/v1/nodes"
+            url = "https://gateway-run-indexer.bls.dev/api/v1/nodes"
             headers = {
                 "Authorization": f"Bearer {auth_token}",
                 "User-Agent": self.ua.random,
